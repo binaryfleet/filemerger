@@ -1,10 +1,4 @@
 import os
-from .config import (
-    ALLOWED_EXTENSIONS,
-    EXCLUDED_DIRECTORIES,
-    EXCLUDED_FILES,
-    MAX_FILE_SIZE_BYTES,
-)
 from .gitignore import is_ignored
 
 def is_allowed_file(
@@ -13,6 +7,8 @@ def is_allowed_file(
     output_file: str | None = None,
     gitignore_spec=None,
     root: str | None = None,
+    max_file_size_bytes: int,
+    excluded_dirs: set[str],
 ) -> bool:
     if not os.path.isfile(path):
         return False
@@ -23,18 +19,17 @@ def is_allowed_file(
     if gitignore_spec and root and is_ignored(path, root=root, spec=gitignore_spec):
         return False
 
-    if os.path.basename(path) in EXCLUDED_FILES:
-        return False
-
-    if os.path.splitext(path)[1].lower() not in ALLOWED_EXTENSIONS:
+    if os.path.splitext(path)[1].lower() not in {
+        ".py", ".js", ".json", ".html", ".css", ".txt", ".md"
+    }:
         return False
 
     parts = path.split(os.sep)
-    if any(part in EXCLUDED_DIRECTORIES for part in parts):
+    if any(part in excluded_dirs for part in parts):
         return False
 
     try:
-        if os.path.getsize(path) > MAX_FILE_SIZE_BYTES:
+        if os.path.getsize(path) > max_file_size_bytes:
             return False
     except OSError:
         return False
