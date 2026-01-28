@@ -4,8 +4,13 @@ from .filters import is_allowed_file
 from .config import DEFAULT_SEPARATOR
 from .gitignore import load_gitignore
 
-def collect_files(paths: List[str], *, output_file: str | None = None) -> List[str]:
+def collect_files(
+    paths: List[str],
+    *,
+    output_file: str | None = None,
+) -> List[str]:
     collected: Set[str] = set()
+
     root = os.getcwd()
     gitignore_spec = load_gitignore(root)
 
@@ -19,9 +24,9 @@ def collect_files(paths: List[str], *, output_file: str | None = None) -> List[s
             collected.add(os.path.abspath(path))
 
         elif os.path.isdir(path):
-            for r, _, files in os.walk(path):
+            for current_root, _, files in os.walk(path):
                 for name in sorted(files):
-                    full_path = os.path.join(r, name)
+                    full_path = os.path.join(current_root, name)
                     if is_allowed_file(
                         full_path,
                         output_file=output_file,

@@ -5,10 +5,16 @@ description = "Developer CLI tool to consolidate project files into a single out
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
+
 authors = [
     { name = "BinaryFleet" }
 ]
+
 keywords = ["cli", "developer-tools", "file-merger", "llm", "code-review"]
+
+dependencies = [
+    "pathspec>=0.11"
+]
 
 [project.urls]
 Homepage = "https://github.com/binaryfleet/filemerger"
@@ -21,6 +27,3 @@ filemerger = "filemerger.cli:main"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
-
-[project.dependencies]
-pathspec = ">=0.11"
