@@ -23,6 +23,11 @@ def main():
         action="store_true",
         help="Show files that would be included without writing output"
     )
+    parser.add_argument(
+        "--stats",
+        action="store_true",
+        help="Print merge statistics"
+    )
 
     args = parser.parse_args()
 
@@ -39,10 +44,21 @@ def main():
         print("Files to be included:")
         for f in files:
             print(f" - {f}")
+
+        if args.stats:
+            print("\nStats:")
+            print(f"  Files: {len(files)}")
         sys.exit(0)
 
-    merge_files(files, output_file)
-    print(f"✔ Merged {len(files)} files into {output_file}")
+    stats = merge_files(files, output_file)
+    print(f"✔ Merged {stats.files} files into {output_file}")
+
+    if args.stats:
+        print("\nStats:")
+        print(f"  Files: {stats.files}")
+        print(f"  Lines: {stats.lines}")
+        print(f"  Bytes: {stats.bytes}")
+        print(f"  Skipped files: {stats.skipped_files}")
 
 if __name__ == "__main__":
     main()
