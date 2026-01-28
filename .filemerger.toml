@@ -1,0 +1,6 @@
+[filters]
+max_file_size_mb = 1
+exclude_dirs = ["migrations", "tests"]
+
+[output]
+separator_length = 60

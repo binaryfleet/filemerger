@@ -1,0 +1,18 @@
+.
+├── .filemerger.toml
+├── .gitignore
+├── filemerger
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── config.py
+│   ├── core.py
+│   ├── filters.py
+│   ├── gitignore.py
+│   ├── user_config.py
+│   └── utils.py
+├── LICENSE
+├── project_tree.txt
+├── pyproject.toml
+└── README.md
+
+2 directories, 14 files

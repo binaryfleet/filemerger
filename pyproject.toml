@@ -1,0 +1,26 @@
+[project]
+name = "filemerger"
+version = "0.1.0"
+description = "Developer CLI tool to consolidate project files into a single output"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "BinaryFleet" }
+]
+keywords = ["cli", "developer-tools", "file-merger", "llm", "code-review"]
+
+[project.urls]
+Homepage = "https://github.com/binaryfleet/filemerger"
+Repository = "https://github.com/binaryfleet/filemerger"
+Issues = "https://github.com/binaryfleet/filemerger/issues"
+
+[project.scripts]
+filemerger = "filemerger.cli:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project.dependencies]
+pathspec = ">=0.11"
