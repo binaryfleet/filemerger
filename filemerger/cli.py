@@ -28,6 +28,11 @@ def main():
         action="store_true",
         help="Print merge statistics"
     )
+    parser.add_argument(
+        "--llm",
+        action="store_true",
+        help="Optimize output for LLM context ingestion"
+    )
 
     args = parser.parse_args()
 
@@ -50,7 +55,12 @@ def main():
             print(f"  Files: {len(files)}")
         sys.exit(0)
 
-    stats = merge_files(files, output_file)
+    stats = merge_files(
+        files,
+        output_file,
+        llm_mode=args.llm,
+    )
+
     print(f"✔ Merged {stats.files} files into {output_file}")
 
     if args.stats:
