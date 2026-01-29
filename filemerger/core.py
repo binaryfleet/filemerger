@@ -59,6 +59,11 @@ def merge_files(
     output_file: str,
     *,
     llm_mode: bool = False,
+    llm_compact: bool = False,
 ) -> MergeStats:
-    formatter = LLMFormatter() if llm_mode else DefaultFormatter()
+    if llm_mode or llm_compact:
+        formatter = LLMFormatter(compact=llm_compact)
+    else:
+        formatter = DefaultFormatter()
+
     return formatter.write(files, output_file)

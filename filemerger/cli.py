@@ -33,8 +33,16 @@ def main():
         action="store_true",
         help="Optimize output for LLM context ingestion"
     )
+    parser.add_argument(
+        "--llm-compact",
+        action="store_true",
+        help="More compact LLM output with fewer blank lines"
+    )
 
     args = parser.parse_args()
+
+    if args.llm_compact:
+        args.llm = True
 
     output_file = normalize_output_filename(args.output)
     output_file = os.path.join(os.getcwd(), output_file)
@@ -59,6 +67,7 @@ def main():
         files,
         output_file,
         llm_mode=args.llm,
+        llm_compact=args.llm_compact,
     )
 
     print(f"✔ Merged {stats.files} files into {output_file}")

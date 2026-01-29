@@ -2,6 +2,9 @@ from typing import List
 from .stats import MergeStats
 
 class LLMFormatter:
+    def __init__(self, *, compact: bool = False):
+        self.compact = compact
+
     def write(self, files: List[str], output_file: str) -> MergeStats:
         stats = MergeStats(files=len(files))
 
@@ -14,15 +17,20 @@ class LLMFormatter:
 
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
-                        content = f.read().rstrip() + "\n\n"
+                        content = f.read().rstrip() + ("\n" if self.compact else "\n\n")
                         out.write(content)
                         stats.lines += content.count("\n")
                         stats.bytes += len(content.encode("utf-8"))
                 except UnicodeDecodeError:
-                    skipped = "[Skipped: binary or non-UTF8 file]\n\n"
+                    skipped = "[Skipped: binary or non-UTF8 file]\n"
                     out.write(skipped)
-                    stats.lines += 2
+                    stats.lines += 1
                     stats.bytes += len(skipped.encode("utf-8"))
                     stats.skipped_files += 1
+
+                if not self.compact:
+                    out.write("\n")
+                    stats.lines += 1
+                    stats.bytes += 1
 
         return stats

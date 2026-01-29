@@ -216,3 +216,9 @@ build/
 .idea/
 .vscode/
 .DS_Store
+
+filemerger-output.txt
+
+*.egg-info/
+build/
+dist/
